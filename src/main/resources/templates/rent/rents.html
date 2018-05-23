@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Wypożyczenia</title>
+</head>
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+<div class="container">
+    <div class="col-12 col-md-12">
+        <h2 class="text-center text-primary display-4">Wypożyczenia</h2>
+    </div>
+    <br>
+    <div class="col-12 col-md-12">
+        <h2 class="text-center text-primary">Wyszukiwanie</h2>
+    </div>
+    <form th:action="@{/admin/rents/search}" method="get">
+        <div class="col-md-7 mx-auto">
+            <div class="form-group my-3">
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">?</span></div>
+                    <input name="value" type="text" id="value" class="form-control"/></div>
+                <div class="text-center">
+                    <label>Szukaj po:</label>
+                    <div class="form-check form-check-inline"><label class="form-check-label">
+                        <input type="radio" name="option" value="1" checked="checked"/>ID</label></div>
+                    <div class="form-check form-check-inline"><label class="form-check-label">
+                        <input type="radio" name="option" value="2"/></label>ID czytelnika
+                    </div>
+                    <div class="form-check form-check-inline"><label class="form-check-label">
+                        <input type="radio" name="option" value="3"/></label>ID książki
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-primary m-3 text-white" type="submit"><i class="fa fa-fw fa-search"></i>Szukaj
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div th:if="${param.penetly!=null}">
+        <div class="col-md-4 col-md-offset-4 mx-auto">
+            <div class="alert alert-success  text-center">
+                <h3><i class="fa fa-lg fa-check"></i>Dokonano zwrotu! Kara wynosi  <span th:text="${param.penetly}"/> złotych</h3>
+            </div>
+        </div>
+    </div>
+    <div th:if="${param.delete!=null}">
+        <br>
+        <div class="col-md-4 col-md-offset-4 mx-auto">
+            <div class="alert alert-success text-center">
+                <h3><i class="fa fa-lg fa-check"></i>Wybrane wypożyczenie zostało usunięte pomyślnie</h3>
+            </div>
+        </div>
+    </div>
+    <br>
+    <a class="btn m-2 btn-secondary" th:href="@{'/admin/rent/add/0'}"><i class="fa fa-fw fa-plus-circle"></i>Nowe
+        wypożyczenie</a>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">ID czytelnika</th>
+                    <th class="text-center">Imię i nazwisko czytelnika</th>
+                    <th class="text-center">ID książki</th>
+                    <th class="text-center">Tytuł książki</th>
+                    <th class="text-center">Data wypożyczenia</th>
+                    <th class="text-center">Termin do zwrotu</th>
+                    <th class="text-center">Data zwrotu</th>
+                    <th class="text-center">Kara</th>
+                    <th class="text-center"></th>
+                    <th class="text-center"></th>
+                    <th class="text-center"></th>
+                </tr>
+                </thead>
+                <th:block th:each="rent : ${rentList}">
+                    <tr>
+                        <td class="text-center" th:text="${rent.id}"/>
+                        <td class="text-center" th:text="${rent.user.id}"/>
+                        <td class="text-center" th:text="${rent.user.name}"/>
+                        <td class="text-center" th:text="${rent.book.id}"/>
+                        <td class="text-center" th:text="${rent.book.title}"/>
+                        <td class="text-center" th:text="${rent.dateOfRental}"/>
+                        <td class="text-center" th:text="${rent.dateOfReturn}"/>
+                        <td class="text-center" th:text="${rent.dateOfFinalReturn}"/>
+                        <td class="text-center" th:text="${rent.penalty}"/>
+                        <td>
+                            <a class="btn btn-secondary btn-xs" th:if="${rent.dateOfFinalReturn==null}" th:href="@{'/admin/rent/return/'+${rent.id}}"><i
+                                    class="fa fa-fw fa-reply"></i>Zwrot</a>
+
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-xs" th:href="@{'/admin/rent/edit/'+${rent.id}}">Edytuj</a>
+
+                        </td>
+                        <td>
+                            <a class="btn btn-danger delete-btn btn-xs" th:href="@{'/admin/rent/delete/'+${rent.id}}">Usuń</a>
+                        </td>
+                    </tr>
+                </th:block>
+            </table>
+            <br>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/includeFooter :: footer"></div>
+</body>
+</html>

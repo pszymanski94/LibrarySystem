@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Edycja wypożyczenia</title>
+</head>
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+
+<div class="col-12 col-md-12">
+    <h2 class="text-center text-primary display-4">Edycja wypożyczenia</h2>
+</div>
+
+<div class="container">
+    <form th:action="@{/admin/rent/add/save}" th:object="${rent}" method="post">
+        <div class="row">
+            <div class="col-md-5">
+                <input th:field="*{id}" type="hidden"/>
+
+                <div class="form-group"><label>* ID użytkownika:</label>
+                    <input th:value="${rent.user.id}" type="number" id="user" name="user" class="form-control"
+                           placeholder="Wpisz ID użytkownika"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('user')}"
+                               th:errors="*{rent.user.id}"/></strong>
+
+                </div>
+                <div class="form-group"><label>* ID pozycji:</label>
+                    <input th:value="${rent.book.id}" type="number" id="book" name="book" class="form-control"
+                           placeholder="Wpisz ID książki"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('book')}"
+                               th:errors="*{rent.user.book}"/></strong>
+
+                </div>
+                <div class="form-group"><label>* Termin do zwrotu:</label>
+                    <input th:field="*{dateOfReturn}" pattern="yyyy-mm-dd" type="date" id="dateOfReturn"
+                           name="dateOfReturn"
+                           class="form-control"
+                    />
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('dateOfReturn')}"
+                               th:errors="*{rent.dateOfReturn}"/></strong>
+                </div>
+                <div class="form-group"><label>** Termin zwrotu woluminu:</label>
+                    <input th:field="*{dateOfFinalReturn}" pattern="yyyy-mm-dd" type="date" id="dateOfFinalReturn"
+                           name="dateOfFinalReturn"
+                           class="form-control"
+                    />
+                    <div class="form-group"><label>* Kara:</label>
+                        <input th:field="*{penalty}" type="text" id="penalty" name="penalty"
+                               class="form-control"
+                        />
+                        <br>
+                        <p><i>
+                            * pole wymagane
+                        </i></p>
+                        <br>
+                        <p><i>
+                            ** w przypadku pomyłki zwrotu zostawić pole puste
+                        </i></p>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg mr-3 text-center">Zapisz</button>
+                    <a class="btn btn-danger btn-lg text-center" th:href="@{/admin/rent/cancel}">Anuluj</a>
+                </div>
+    </form>
+</div>
+</div>
+</div>
+<br>
+<div th:replace="fragments/includeFooter :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

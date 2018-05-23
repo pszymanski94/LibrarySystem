@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Kontakt</title>
+</head>
+
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+
+<div class="container">
+    <div class="col-12 col-md-12">
+        <br>
+        <h2 class="text-center text-primary display-4">Kontakt</h2>
+    </div>
+
+    <div class="text-center">
+        <br><br>
+        <h3 class="text-center"><strong>Library System</strong></h3>
+        <br>
+        <div class="form-group"><p><strong>Ulica:</strong> Orężna 33</p></div>
+        <div class="form-group"><p><strong>Miejscowość:</strong> 05-500 Piaseczno</p></div>
+        <div class="form-group"><p><strong>Telefon:</strong> (22) 724 22 95 lub 799 500 500 </p></div>
+        <div class="form-group"><p><strong>E-Mail:</strong> librarysystemtest(at)gmail.com</p></div>
+
+    </div>
+</div>
+</div>
+<br><br><br><br><br><br>
+<div th:replace="fragments/includeFooter :: footer"></div>
+</body>
+</html>

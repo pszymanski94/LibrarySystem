@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Rejestracja</title>
+    <script type="text/javascript" th:inline="javascript">
+        $(function () {
+            $("#datePicker").datepicker({
+                format: "dd/mm/yyyy",
+                orientation: "bottom auto",
+                maxDate: "now"
+            });
+        });
+    </script>
+</head>
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+<div th:if="${user.id == null}" class="col-12 col-md-12">
+    <h2 class="text-center text-primary display-4">Rejestracja użytkownika</h2>
+</div>
+<div th:if="${user.id != null}" class="col-12 col-md-12">
+    <h2 class="text-center text-primary display-4">Edycja danych</h2>
+</div>
+<div class="container">
+
+    <form th:action="@{/registration/save}" th:object="${user}" method="post">
+        <div class="row">
+            <div class="col-md-5">
+                <input th:field="*{id}" type="hidden"/>
+                <div class="form-group"><label>* Imię i nazwisko:</label>
+                    <input th:field="*{name}" type="text" id="name" class="form-control"
+                           placeholder="Wpisz imię i nazwisko"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"/>
+                    </strong>
+                    </p>
+                    <div class="form-group"><label>* Data urodzenia:</label>
+                        <input th:field="*{dateOfBirth}" type="date" pattern="yyyy-mm-dd" id="datePicker"
+                               class="form-control"/>
+                        <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('dateOfBirth')}"
+                                   th:errors="*{dateOfBirth}"/></strong>
+                    </div>
+                    <div class="form-group"><label>* Ulica:</label>
+                        <input th:field="*{street}" type="text" id="street" class="form-control"
+                               placeholder="Podaj ulicę"/>
+                        <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('street')}"
+                                   th:errors="*{street}"/></strong>
+                    </div>
+                    <div class="form-group"><label>* Miejscowość:</label>
+                        <input th:field="*{city}" type="text" id="city" class="form-control"
+                               placeholder="Podaj miejscowość"/>
+                        <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('city')}"
+                                   th:errors="*{city}"/></strong>
+                    </div>
+                    <div class="form-group"><label>* Telefon:</label>
+                        <input th:field="*{phone}" type="text" id="phone" class="form-control"
+                               placeholder="Podaj telefon"/>
+                        <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('phone')}"
+                                   th:errors="*{phone}"/></strong>
+                    </div>
+                    <div class="form-group"><label>* E-Mail:</label>
+                        <input th:field="*{email}" type="email" id="email" class="form-control"
+                               placeholder="Podaj adres e-mail"/>
+                        <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('email')}"
+                                   th:errors="*{email}"/></strong>
+                    </div>
+                    <div class="form-group"><label>* Login:</label>
+                        <div th:if="${user.id == null}">
+                            <input th:field="*{username}" type="text" id="username" class="form-control"
+                                   placeholder="Podaj login"/>
+                        </div>
+                        <div th:if="${user.id != null}">
+                            <input th:field="*{username}" type="text" id="username2" class="form-control"
+                                   placeholder="Podaj login" th:readonly="readonly"/>
+                        </div>
+                        <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('username')}"
+                                   th:errors="*{username}"/></strong>
+                    </div>
+                    <div class="form-group"><label>* Hasło:</label>
+                        <input th:field="*{password}" type="password" id="password"
+                               class="form-control"
+                               placeholder="Podaj hasło"
+                               autocomplete="new-password"/>
+                        <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('password')}"
+                                   th:errors="*{password}"/></strong>
+                    </div>
+                    <p><i>
+                        * pole wymagane
+                    </i></p><br/>
+                </div>
+            </div>
+            <div class="col-md-12 text-center">
+                <button class="btn btn-primary btn-lg mr-3 text-center" type="submit">Zarejestruj się!</button>
+                <a class="btn btn-danger btn-lg text-center" th:href="@{/registration/cancel}">Anuluj</a>
+            </div>
+            <br>
+    </form>
+</div>
+</div>
+<br>
+<div th:replace="fragments/includeFooter :: footer"></div>
+</body>
+</html>

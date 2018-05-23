@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Strefa administracyjna</title>
+</head>
+
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+<div class="container">
+    <div class="col-12 col-md-12">
+        <br>
+        <h2 class="text-center text-primary display-4">Strefa administracyjna</h2>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-md-5 text-center">
+            <a class="btn btn-primary btn-lg m-0 p-5" href="/admin/rents/"><i
+                    class="fa fa-fw text-light fa-exchange"></i> Wypożyczenia</a>
+        </div>
+        <div class="col-md-6 text-center">
+            <a class="btn btn-primary btn-lg m-0 p-5" href="/admin/users/"><i class="fa fa-fw text-light fa-users"></i>
+                Czytelnicy</a>
+        </div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-md-5 text-center">
+            <a class="btn btn-primary btn-lg m-0 p-5" href="/admin/reservations"><i
+                    class="fa fa-fw text-light fa-list-ol"></i> Rezerwacje</a>
+        </div>
+        <div class="col-md-6 text-center">
+            <a class="btn btn-primary btn-lg m-0 p-5" href="/admin/newsletters"><i
+                    class="fa fa-fw text-light fa-envelope-square"></i> Newsletter</a>
+        </div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-md-5 text-center">
+            <a class="btn btn-primary btn-lg m-0 p-5" href="/admin/statistic/"><i
+                    class="fa fa-fw text-light fa-signal"></i> Statystyki</a>
+        </div>
+        <div class="col-md-6 text-center" sec:authorize="hasRole('ADMIN')">
+            <a class="btn btn-primary btn-lg m-0 p-5" href="/admin/employees/"><i
+                    class="fa fa-fw text-light fa-suitcase"></i> Pracownicy</a>
+        </div>
+    </div>
+</div>
+</div>
+<br><br><br>
+<div th:replace="fragments/includeFooter :: footer"></div>
+</body>
+</html>

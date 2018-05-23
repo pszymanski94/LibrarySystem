@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Dodaj pracownika/edycja danych</title>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                format: "dd-MM-yyyy",
+                orientation: "bottom auto",
+                maxDate: 0,
+                startDate: new Date()
+            });
+        });
+    </script>
+</head>
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+
+<div th:if="${employee.id == null}">
+    <div class="col-12 col-md-12">
+        <h2 class="text-center text-primary display-4">Dodaj pracownika</h2>
+    </div>
+</div>
+<div th:if="${employee.id != null}">
+    <div class="col-12 col-md-12">
+        <h2 class="text-center text-primary display-4">Edycja danych</h2>
+    </div>
+</div>
+
+<div class="container">
+    <form th:action="@{/admin/employee/save}" th:object="${employee}" method="post">
+        <div class="row">
+            <div class="col-md-5">
+                <br>
+                <input th:field="*{id}" type="hidden"/>
+                <div class="form-group"><label>* Imię i nazwisko:</label>
+                    <input th:field="*{name}" type="text" id="name" class="form-control"
+                           placeholder="Wpisz imię"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('name')}"
+                               th:errors="*{name}"/></strong>
+
+                </div>
+                <div class="form-group"><label>* Data urodzenia:</label>
+                    <input th:field="*{dateOfBirth}" type="date" pattern="yyyy-mm-dd" id="datePicker"
+                           class="form-control"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('dateOfBirth')}"
+                               th:errors="*{dateOfBirth}"/></strong>
+
+                </div>
+                <div class="form-group"><label>* Telefon:</label>
+                    <input th:field="*{phone}" type="text" id="phone" class="form-control"
+                           placeholder="Podaj telefon"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('phone')}"
+                               th:errors="*{phone}"/></strong>
+
+                </div>
+                <div class="form-group"><label>* E-Mail:</label>
+                    <input th:field="*{email}" type="email" id="email" class="form-control"
+                           placeholder="Podaj adres e-mail"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('email')}"
+                               th:errors="*{email}"/></strong>
+
+                </div>
+                <div class="form-group"><label>* Login:</label>
+                    <input th:field="*{username}" type="text" id="username" class="form-control"
+                           placeholder="Podaj login"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('username')}"
+                               th:errors="*{username}"/></strong>
+
+                </div>
+                <div class="form-group"><label>* Hasło:</label>
+                    <input th:field="*{password}" type="password" id="password"
+                           class="form-control"
+                           placeholder="Podaj hasło"
+                           autocomplete="new-password"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('password')}"
+                               th:errors="*{password}"/></strong>
+
+                </div>
+                <p><i>
+                    * pole wymagane
+                </i></p>
+            </div>
+        </div>
+        <div class="col-md-12 text-center">
+            <button class="btn btn-primary btn-lg mr-3" type="submit">Zapisz</button>
+            <a class="btn btn-danger btn-lg" href="/admin/employee/cancel">Anuluj</a>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+</div>
+<br><br>
+<div th:replace="fragments/includeFooter :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Dodaj/edytuj zbiór</title>
+    </div>
+</head>
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+
+<div th:if="${book.id == null}" class="col-12 col-md-12">
+    <h2 class="text-center text-primary display-4">Dodaj zbiór</h2>
+</div>
+<div th:if="${book.id != null}" class="col-12 col-md-12">
+    <h2 class="text-center text-primary display-4">Edycja zbioru</h2>
+</div>
+<div th:if="${param.errors!=null}">
+    <div class="col-md-4 col-md-offset-4 mx-auto">
+        <div class="alert alert-success  text-center">
+            <h3><i class="fa fa-lg fa-check"></i>Niepowodzenie - formularz zawierał błędy! Spróbuj ponownie</h3>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <form th:action="@{/book-add/save}" th:object="${book}" method="post">
+        <div class="row">
+            <div class="col-md-5">
+                <input th:field="*{id}" type="hidden"/>
+                <div class="form-group"><label>* Tytuł:</label>
+                    <input th:field="*{title}" type="text" id="title" class="form-control"
+                           placeholder="Wpisz tytuł"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('title')}"
+                               th:errors="*{title}"/></strong>
+                </div>
+                <div class="form-group"><label>* Autor:</label>
+                    <input th:field="*{author}" type="text" id="author" class="form-control"
+                           placeholder="Wpisz autora"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('author')}"
+                               th:errors="*{author}"/></strong>
+                </div>
+                <div class="form-group"><label>* Nr ISBN:</label>
+                    <input th:field="*{isbnCode}" type="text" id="subname" class="form-control"
+                           placeholder="Wpisz numer ISBN"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('isbnCode')}"
+                               th:errors="*{isbnCode}"/></strong>
+                </div>
+                <div class="form-group"><label>* Rok wydania:</label>
+                    <input th:field="*{yearOfPublication}" type="number" id="yearOfPublication" class="form-control"
+                           />
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('yearOfPublication')}"
+                               th:errors="*{yearOfPublication}"/></strong>
+                </div>
+                <div class="form-group"><label>* Kategoria:</label>
+                    <select class="form-control" th:field="*{category}">
+                        <option th:each="value: ${bookCategory}" th:value="${value}" th:text="${value}"/>
+                    </select>
+                </div>
+                <div class="form-group"><label>* Liczba egzemplarzy w bibliotece:</label>
+                    <input th:field="*{numberBooks}" type="number" id="numberBooks" class="form-control"
+                           />
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('numberBooks')}"
+                               th:errors="*{numberBooks}"/></strong>
+                </div>
+                <div class="form-group"><label>*Liczba aktualnie dostępnych egzemplarzy:</label>
+                    <input th:field="*{numberBooksAvailable}" type="number" id="numberBooksAvailable" class="form-control"
+                           />
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('numberBooksAvailable')}"
+                               th:errors="*{numberBooksAvailable}"/></strong>
+                </div>
+                <div class="form-group"><label> Komentarz/uwagi:</label>
+                    <textarea class="form-control" th:field="*{comments}" rows="3" cols="30"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('comments')}"
+                               th:errors="*{comments}"/></strong>
+                </div>
+                <br>
+                <p><i>
+                    * pole wymagane
+                </i></p>
+            </div>
+        </div>
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary btn-lg mr-3 text-center">Zapisz</button>
+            <a class="btn btn-danger btn-lg text-center" th:href="@{/book-add/cancel}">Anuluj</a>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+<br>
+<div th:replace="fragments/includeFooter :: footer"></div>
+</body>
+</html>

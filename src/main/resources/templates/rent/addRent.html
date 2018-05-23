@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Wypożyczenie/edycja wypożyczenia</title>
+</head>
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+
+<div th:if="${rent.id == null}" class="col-12 col-md-12">
+    <h2 class="text-center text-primary display-4">Wypożyczenie</h2>
+</div>
+<div th:if="${rent.id != null}" class="col-12 col-md-12">
+    <h2 class="text-center text-primary display-4">Edycja wypożyczenia</h2>
+</div>
+<div th:if="${param.errors!=null}">
+    <div class="col-md-4 col-md-offset-4 mx-auto">
+        <div class="alert alert-success  text-center">
+            <h3><i class="fa fa-lg fa-check"></i>Niepowodzenie - formularz zawierał błędy! Spróbuj ponownie</h3>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <form th:action="@{/admin/rent/add/save}" th:object="${rent}" method="post">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group"><label>* ID użytkownika:</label>
+                    <input th:value="${userid}" type="number" id="user" name="user" class="form-control"
+                           placeholder="Wpisz ID użytkownika"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('user')}"
+                               th:errors="*{user}"/></strong>
+
+                </div>
+                <div class="form-group"><label>* ID pozycji:</label>
+                    <input th:field="*{book}" type="number" id="book" name="book" class="form-control"
+                           placeholder="Wpisz ID pozycji"/>
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('book')}"
+                               th:errors="*{book}"/></strong>
+
+                </div>
+                <div class="form-group"><label>* Termin do zwrotu:</label>
+                    <input th:field="*{dateOfReturn}" type="date" id="dateofreturn" name="dateofreturn"
+                           class="form-control"
+                    />
+                    <strong><p class="text-danger help-block" th:if="${#fields.hasErrors('dateOfReturn')}"
+                               th:errors="*{dateOfReturn}"/></strong>
+                </div>
+
+                <br>
+                <p><i>
+                    * pole wymagane
+                </i></p>
+            </div>
+        </div>
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary btn-lg mr-3 text-center">Wypożycz</button>
+            <a class="btn btn-danger btn-lg text-center" th:href="@{/admin/rent/cancel}">Anuluj</a>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+<br>
+<div th:replace="fragments/includeFooter :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

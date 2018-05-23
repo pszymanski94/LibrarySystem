@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+    <style>
+
+        body{
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+        #navbar {
+            flex-direction: row;
+            background-color: #12bbad;
+            margin-top: 0;
+            width: 100%;
+            padding:0.75rem 1.5rem;
+            line-height:1.5;
+            font-size: 1rem;
+            font-weight: 200;
+        }
+        #logo{
+            color: #fff;
+            font-size: 1.25rem;
+        }
+
+    </style>
+</head>
+<body>
+<div id="navbar"><div id="logo"><i class="fa fa-fw fa-book"></i><b><b>Library System</b></b></div></div>
+<br>
+<h4>Witaj!</h4>
+<p>Lista osób, które nie oddały ksiażek:</p>
+
+<table id="table">
+    <thead>
+    <tr>
+        <th class="text-center">ID</th>
+        <th class="text-center">Imię i nazwisko czytelnika</th>
+        <th class="text-center">Numer kontaktowy</th>
+        <th class="text-center">Tytuł książki</th>
+        <th class="text-center">Data wypożyczenia</th>
+        <th class="text-center">Planowany termin zwrotu</th>
+
+
+    </thead>
+    <th:block th:each="list: ${list}">
+        <tr>
+            <td class="text-center" th:text="${list.id}"/>
+            <td class="text-center" th:text="${list.user.name}"/>
+            <td class="text-center" th:text="${list.user.phone}"/>
+            <td class="text-center" th:text="${list.book.title}"/>
+            <td class="text-center" th:text="${list.dateOfRental}"/>
+            <td class="text-center" th:text="${list.dateOfReturn}"/>
+        </tr>
+    </th:block>
+</table>
+</div>
+
+<br>
+<p><i>Library System</i></p>
+</body>
+</html>

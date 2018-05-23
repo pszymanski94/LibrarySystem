@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Library System</title>
+</head>
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+<div th:if="${param.add!=null}">
+    <br>
+    <div class="col-md-4 col-md-offset-4 mx-auto">
+        <div class="alert alert-success text-center">
+            <h3><i class="fa fa-lg fa-check"></i>Zostałeś dodany do newslettera</h3>
+        </div>
+    </div>
+</div>
+<div th:if="${param.adduser!=null}">
+    <br>
+    <div class="col-md-4 col-md-offset-4 mx-auto">
+        <div class="alert alert-success text-center">
+            <h3><i class="fa fa-lg fa-check"></i>Rejestracja zakończona pomyślnie!</h3>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <br>
+            <h1 class="text-center display-3 text-primary">Witamy w Library System </h1>
+            <br><br><br>
+            <p class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute
+                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                est laborum.</p>
+        </div>
+    </div>
+</div>
+<br><br>
+<div class="py-5 text-white text-center bg-secondary">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <h1>Zapisz się do newslettera!</h1>
+                <p class="lead mb-4">Otrzymuj co tydzień informacje o nowych pozycjach dostępnych w
+                    bibliotece</p>
+                <form th:action="@{/newsletter/add}" th:object="${newsletter}" method="post"
+                      class="form-inline justify-content-center">
+                    <div class="input-group my-1">
+                        <input th:field="*{name}" type="text" id="name" class="form-control"
+                               placeholder="Twoje imię"/>
+                        <p class="form-error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+                            error</p>
+                        <input th:field="*{email}" type="email" id="email" class="form-control"
+                               placeholder="Twój e-mail"/>
+                        <p class="form-error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name
+                            error</p>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">Subskrybuj</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/includeFooter :: footer"></div>
+</body>
+</html>

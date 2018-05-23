@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Statystyki</title>
+</head>
+
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+
+<div class="container">
+    <div class="col-12 col-md-12">
+        <h1 class="text-center text-primary display-4">Statystyki</h1>
+    </div>
+    <br><br><br>
+    <p> W ciągu ostatniego tygodnia dodano <strong><span th:text="${staticList.get(0)}"/></strong> nowych egzemplarzy pozycji. </p>
+    <p> W ciągu ostatnich 30 dni dodano <strong><span th:text="${staticList.get(1)}"/></strong> nowych egzemplarzy pozycji. </p>
+    <p> W ciągu ostatniego tygodnia dokonano <strong><span th:text="${staticList.get(2)}"/></strong> wypożyczeń woluminów. </p>
+    <p> W ciągu ostatnich 30 dni dokonano <strong><span th:text="${staticList.get(3)}"/></strong> wypożyczeń woluminów. </p>
+    <p> W ciągu ostatniego tygodnia dokonano <strong><span th:text="${staticList.get(4)}"/></strong> rezerwacji pozycji. </p>
+    <p> W ciągu ostatnich 30 dni dokonano <strong><span th:text="${staticList.get(5)}"/></strong> rezerwacji pozycji. </p>
+
+</div>
+</div>
+<br><br><br><br><br><br>
+<div th:replace="fragments/includeFooter :: footer"></div>
+</body>
+</html>

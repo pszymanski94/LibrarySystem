@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Moje konto</title>
+</head>
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+<div th:each="user : ${user}">
+    <div sec:authorize="hasAnyRole('EMPLOYEE','ADMIN')">
+        <h2 class="text-center text-primary display-4">Konto czytelnika</h2>
+    </div>
+    <div sec:authorize="hasRole('USER')">
+        <h2 class="text-center text-primary display-4">Moje konto</h2>
+    </div>
+    <br>
+    <div class="col-12 col-md-12">
+        <br>
+        <h2 class="text-center text-primary">Dane:</h2>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-3">
+                <strong><label>Imię i nazwisko:</label></strong>
+                <p th:text="${user.name}"/>
+                <strong><label>Ulica:</label></strong>
+                <p th:text="${user.street}"/>
+                <strong><label>Miejscowość:</label></strong>
+                <p th:text="${user.city}"/>
+            </div>
+            <div class="col-3">
+                <strong><label>Data urodzenia:</label></strong>
+                <p th:text="${user.dateOfBirth}"/>
+                <strong><label>Telefon:</label></strong>
+                <p th:text="${user.phone}"/>
+                <strong><label>Adres e-mail:</label></strong>
+                <p th:text="${user.email}"/>
+            </div>
+            <div class="col-md-12 text-center">
+                <br>
+                <a class="btn btn-secondary bt-md text-white" th:href="@{'/user/edit/'+${user.id}}">Zmień dane</a>
+            </div>
+        </div>
+        <div class="col-12 col-md-12">
+            <br><br>
+            <h2 class="text-center text-primary">Wypożyczenia:</h2>
+        </div>
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Tytuł pozycji</th>
+                    <th class="text-center">Data wypożyczenia</th>
+                    <th class="text-center">Termin do zwrotu</th>
+                    <th class="text-center">Data zwrotu</th>
+                    <th class="text-center">Kara (w zł)</th>
+                    <div sec:authorize="hasAnyRole('ADMIN','EMPLOYEE')">
+                        <th class="text-center"></th>
+                    </div>
+
+                </tr>
+                <th:block th:each="rent : ${rentList}">
+                    <tr>
+                        <td class="text-center" th:text="${rent.id}"/>
+                        <td class="text-center" th:text="${rent.book.title}"/>
+                        <td class="text-center" th:text="${rent.dateOfRental}"/>
+                        <td class="text-center" th:text="${rent.dateOfReturn}"/>
+                        <td class="text-center" th:text="${rent.dateOfFinalReturn}"/>
+                        <td class="text-center" th:text="${rent.penalty}"/>
+                        <div sec:authorize="hasAnyRole('ADMIN','EMPLOYEE')">
+                            <td class="text-center">
+                                <a class="btn btn-secondary btn-xs" th:if="${rent.dateOfFinalReturn==null}"
+                                   th:href="@{'/admin/rent/return/'+${rent.id}}"><i
+                                        class="fa fa-fw fa-reply"></i>Zwrot</a>
+
+                            </td>
+                        </div>
+                    </tr>
+                </th:block>
+                </thead>
+            </table>
+        </div>
+        <div class="col-12 col-md-12">
+            <br>
+            <h2 class="text-center text-primary">Rezerwacje:</h2>
+        </div>
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Tytuł</th>
+                    <th class="text-center">Data rezerwacji</th>
+                    <th></th>
+                </tr>
+                <th:block th:each="reservation : ${reservationList}">
+                    <tr>
+                        <td class="text-center" th:text="${reservation.id}"/>
+                        <td class="text-center" th:text="${reservation.book.title}"/>
+                        <td class="text-center" th:text="${reservation.dateOfReservation}"/>
+                        <td class="text-center">
+                            <a class="btn btn-danger delete-btn btn-xs" th:href="@{'/book-delete/' + ${}}">Anuluj
+                                rezerwację</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </thead>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Odmowa dostępu</title>
+</head>
+
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg- mx-auto" style="padding-top: 40px;">
+            <br><br><br>
+            <div class="alert alert-danger text-center">
+                <i class="fa fa-times-circle fa-4x"></i>
+                <h1>Błąd 403 - Odmowa dostępu!</h1>
+                <h3>Nie masz odpowiednich uprawnień, aby wejść na daną stronę</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br>
+<div th:replace="fragments/includeFooter :: footer"></div>
+</body>
+</html>

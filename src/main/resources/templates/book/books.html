@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:include="fragments/includeCssJs :: cssjs">
+    <title id="pageTitle">Katalog zbiorów</title>
+</head>
+<body>
+<div th:replace="fragments/includeMenu :: header"></div>
+
+<div class="container">
+    <div class="col-12 col-md-12">
+        <h1 class="text-center text-primary display-4">Katalog zbiorów</h1>
+    </div>
+    <br>
+    <div class="col-12 col-md-12">
+        <h2 class="text-center text-primary">Wyszukiwanie</h2>
+    </div>
+    <form th:action="@{/books-search}" method="get">
+        <div class="col-md-7 mx-auto">
+            <div class="form-group my-3">
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">?</span></div>
+                    <input name="value" type="text" id="value" class="form-control"/></div>
+                <div class="text-center">
+                    <label>Szukaj po:</label>
+                    <div class="form-check form-check-inline"><label class="form-check-label">
+                        <input type="radio" name="option" value="1" checked="checked"/>Tytule</label></div>
+                    <div class="form-check form-check-inline"><label class="form-check-label">
+                        <input type="radio" name="option" value="2"/></label>Autorze
+                    </div>
+                    <div class="form-check form-check-inline"><label class="form-check-label">
+                        <input type="radio" name="option" value="3"/></label>Roku wydania
+                    </div>
+                    <div class="form-check form-check-inline"><label class="form-check-label">
+                        <input type="radio" name="option" value="4"/></label>Kategorii
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-primary m-3 text-white" type="submit"><i class="fa fa-fw fa-search"></i>Szukaj
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div th:if="${param.res!=null}">
+        <div class="col-md-4 col-md-offset-4 mx-auto">
+            <div class="alert alert-success  text-center">
+                <h3><i class="fa fa-lg fa-check"></i>Dokonano rezerwacji!</h3>
+            </div>
+        </div>
+    </div>
+    <div th:if="${param.adding!=null}">
+        <div class="col-md-4 col-md-offset-4 mx-auto">
+            <div class="alert alert-success  text-center">
+                <h3><i class="fa fa-lg fa-check"></i>Pomyślnie dodano nową pozycję!</h3>
+            </div>
+        </div>
+    </div>
+    <div th:if="${param.delete!=null}">
+        <br>
+        <div class="col-md-4 col-md-offset-4 mx-auto">
+            <div class="alert alert-success text-center">
+                <h3><i class="fa fa-lg fa-check"></i>Wybrana pozycja została usunięta pomyślnie</h3>
+            </div>
+        </div>
+    </div>
+    <div sec:authorize="hasAnyRole('ADMIN','EMPLOYEE')">
+        <a class="btn m-2 btn-secondary" href="/admin/book/add"><i class="fa fa-fw fa-plus-circle"></i>Dodaj pozycję</a>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover ">
+                <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Tytuł</th>
+                    <th class="text-center">Autor</th>
+                    <th class="text-center">Nr ISBN</th>
+                    <th class="text-center">Rok wydania</th>
+                    <th class="text-center">Kategoria</th>
+                    <th class="text-center">Liczba aktualnie dostępnych egzemplarzy</th>
+                    <div sec:authorize="hasAnyRole('ADMIN','EMPLOYEE')">
+                        <th class="text-center">Liczba egzemplarzy w bibliotece</th>
+                        <th class="text-center">Komentarz/uwagi</th>
+                        <th class="text-center">Data dodania książki</th>
+                        <th></th>
+                    </div>
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <th class="text-center"></th>
+                    </div>
+                </tr>
+                </thead>
+                <th:block th:each="book : ${bookList}">
+                    <tr>
+                        <td class="text-center" th:text="${book.id}"/>
+                        <td class="text-center" th:text="${book.title}"/>
+                        <td class="text-center" th:text="${book.author}"/>
+                        <td class="text-center" th:text="${book.isbnCode}"/>
+                        <td class="text-center" th:text="${book.yearOfPublication}"/>
+                        <td class="text-center" th:text="${book.category}"/>
+                        <td class="text-center" th:text="${book.numberBooksAvailable}"/>
+                        <div sec:authorize="hasAnyRole('ADMIN','EMPLOYEE')">
+                            <td class="text-center" th:text="${book.numberBooks}"/>
+                            <td class="text-center" th:text="${book.comments}"/>
+                            <td class="text-center" th:text="${book.dateAddingBook}"/>
+                        </div>
+                        <div sec:authorize="hasRole('USER')">
+                            <td>
+                                <a th:href="@{'/book/reservation-user/' + ${book.id}}" class="btn btn-info btn-xs">Zarezerwuj</a>
+                            </td>
+                        </div>
+                        <div sec:authorize="hasAnyRole('ADMIN','EMPLOYEE')">
+                            <td>
+                                <a th:href="@{'/admin/book/edit?id=' + ${book.id}}" class="btn btn-primary btn-xs">Edytuj</a>
+
+                            </td>
+                        </div>
+                        <div sec:authorize="hasRole('ADMIN')">
+                            <td>
+                                <a class="btn btn-danger delete-btn btn-xs"
+                                   th:href="@{'/admin/book-delete/' + ${book.id}}">Usuń</a>
+                            </td>
+                        </div>
+                    </tr>
+                </th:block>
+            </table>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/includeFooter :: footer"></div>
+</body>
+</html>

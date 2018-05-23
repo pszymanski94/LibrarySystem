@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+    <style>
+
+        body{
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+        #navbar {
+            flex-direction: row;
+            background-color: #12bbad;
+            margin-top: 0;
+            width: 100%;
+            padding:0.75rem 1.5rem;
+            line-height:1.5;
+            font-size: 1rem;
+            font-weight: 200;
+        }
+        #logo{
+            color: #fff;
+            font-size: 1.25rem;
+
+        }
+    </style>
+</head>
+<body>
+<div id="navbar"><div id="logo"><i class="fa fa-fw fa-book"></i><b><b>Library System</b></b></div></div>
+<br>
+<h4>Witaj <span th:text="${object.user.name}"/>!</h4>
+<p>Informujemy, że zarezerwowana pozycja: <i><span th:text="${object.book.title}"/></i>, autorstwa: <span th:text="${object.book.author}"/>, jest już dostępna i czeka na Ciebie :)</p>
+<p>Prosimy odebrać książkę w ciągu 7 dni.</p>
+<br>
+<p><i>Library System</i></p>
+</body>
+</html>
