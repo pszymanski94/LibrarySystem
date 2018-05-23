@@ -6,7 +6,7 @@ System supporting library management and facilitating access for readers. It all
 * JVM: Java 8, Spring 5 (Boot, Core, MVC, Data JPA, Security), Hibernate 5.
 * Web: Thymeleaf, HTML, CSS (Bootstrap), Tomcat.
 * Database: MySQL.
-* Tools: Maven.
+* Tools: Maven, Lombok.
 
 
 
